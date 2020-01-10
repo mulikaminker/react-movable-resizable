@@ -1,5 +1,5 @@
-export const getNameFromClassList = (classList: []): string => {
-	const clArrayLength = classList.length;
+export const getNameFromClassList = (classList: DOMTokenList): string => {
+  const clArrayLength = classList.length;
 
-	return classList[clArrayLength - 1];
+  return classList[clArrayLength - 1];
 };

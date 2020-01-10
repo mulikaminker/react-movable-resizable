@@ -40,7 +40,7 @@ export default function MovableResizble({ useParentBounds }: MovableResizbleProp
 		};
 	};
 
-	const getResizableMaxHeight = ({ position }) => {
+	const getResizableMaxHeight = (position: string ) : number => {
 		const resizerEl = movableRef.current;
 		const rect = resizerEl.getBoundingClientRect();
 		const movableParent = resizerEl.parentNode.getBoundingClientRect();
@@ -64,8 +64,8 @@ export default function MovableResizble({ useParentBounds }: MovableResizbleProp
 		if (movableActive) return false;
 		e.stopPropagation();
 
-		const activeResizer = e.target;
-		const position = getNameFromClassList({ classList: e.target.classList });
+		const activeResizer = e.target as Element;
+		const position = getNameFromClassList(activeResizer.classList);
 		const resizerEl = movableRef.current;
 		const rect = resizerEl.getBoundingClientRect();
 		const movableParent = resizerEl.parentNode.getBoundingClientRect();
@@ -73,7 +73,7 @@ export default function MovableResizble({ useParentBounds }: MovableResizbleProp
 		let prevX = e.clientX;
 		let prevY = e.clientY < movableParent.top ? movableParent.top : e.clientY;
 		let prevRight = rect.right;
-		let newMaxHeight = getResizableMaxHeight({ position });
+		let newMaxHeight = getResizableMaxHeight(position);
 
 		const onResizableMouseUp = () => {
 			window.removeEventListener('mousemove', onResizableMouseMove);
@@ -84,17 +84,15 @@ export default function MovableResizble({ useParentBounds }: MovableResizbleProp
 			const resizerEl = movableRef.current;
 			const rect = resizerEl.getBoundingClientRect();
 
-			let newWidth,
-				newHeight,
-				newX = movablePositions.x,
-				newY = movablePositions.y,
-				newMaxWidth = movablePositions.maxWidth;
-			const { maxTop, maxLeft, maxWidth, maxHeight, bottom, right, maxRight } = getParentElementPosition();
+			let newWidth;
+				let newHeight;
+				let newX = movablePositions.x;
+				let newY = movablePositions.y
+			const { maxTop, maxWidth, bottom, right } = getParentElementPosition();
 
 			let clientY = e.clientY < maxTop ? maxTop : e.clientY;
 
 			if (activeResizer.classList.contains('bottom-right')) {
-				newMaxWidth = maxWidth;
 
 				if (rect.left + rect.width - (prevX - e.clientX) > right) {
 					newWidth = right - rect.left;
@@ -165,7 +163,7 @@ export default function MovableResizble({ useParentBounds }: MovableResizbleProp
 		window.addEventListener('mouseup', onResizableMouseUp);
 	};
 
-	const getMovableParentBounds = ({ newX, newY }): { xPosition: number; yPosition: number } => {
+	const getMovableParentBounds = ({ newX, newY } :  {newX: number,newY:number}): { xPosition: number; yPosition: number } => {
 		const rect = movableRef.current.getBoundingClientRect();
 		const movableEl = movableRef.current;
 		const movableParent = movableEl.parentNode.getBoundingClientRect();
@@ -207,7 +205,7 @@ export default function MovableResizble({ useParentBounds }: MovableResizbleProp
 		prevX = e.clientX - movableOffsets.x;
 		prevY = e.clientY - movableOffsets.y;
 
-		const onMovableMouseMove = (e: React.MouseEvent) => {
+		const onMovableMouseMove = (e: MouseEvent) :void => {
 			newX = e.clientX - prevX;
 			newY = e.clientY - prevY;
 

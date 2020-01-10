@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Movable = styled.div.attrs(
-	(props: { width: number; height: number; x: number; y: number; maxHeight: number }) => ({
+	(props: { width: number; height: number; x: number; y: number; maxHeight: number })  : any => ({
 		style: {
 			width: `${props.width}px`,
 			height: `${props.height}px`,
