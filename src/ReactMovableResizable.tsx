@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Movable, Resizer } from './ReactMovableResizble.styles';
 import { reizersMap } from './reizersMap';
-import { getNameFromClassList } from './utils/movable-resizble-utils';
+import { getNameFromClassList } from './utils';
 
 export type MovableResizbleProps = {
 	useParentBounds: boolean;
