@@ -1,13 +1,15 @@
-# react-resizable-draggable
+# react-movable-resizable
 
 > 
 
-[![NPM](https://img.shields.io/npm/v/react-resizable-draggable.svg)](https://www.npmjs.com/package/react-resizable-draggable) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-movable-resizable.svg)](https://www.npmjs.com/package/react-movable-resizable
+) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-npm install --save react-resizable-draggable
+npm install --save react-movable-resizable
+
 ```
 
 ## Usage
@@ -15,12 +17,12 @@ npm install --save react-resizable-draggable
 ```tsx
 import * as React from 'react'
 
-import MyComponent from 'react-resizable-draggable'
+import ReactmovableResizable from 'react-resizable-draggable'
 
 class Example extends React.Component {
   render () {
     return (
-      <MyComponent />
+      <ReactmovableResizable />
     )
   }
 }
