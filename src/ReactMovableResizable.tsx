@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import * as React from 'react';
 import { Movable, Resizer } from './ReactMovableResizble.styles';
 import { reizersMap } from './reizersMap';
 import { getNameFromClassList } from './utils';
@@ -8,7 +8,7 @@ export type MovableResizbleProps = {
 };
 
 export default function MovableResizble({ useParentBounds }: MovableResizbleProps) {
-	const [ movablePositions, setMovablePositions ] = useState({
+	const [ movablePositions, setMovablePositions ] = React.useState({
 		x: 0,
 		y: 0,
 		width: 100,
@@ -16,11 +16,11 @@ export default function MovableResizble({ useParentBounds }: MovableResizbleProp
 		maxWidth: 500,
 		maxHeight: 500
 	});
-	const [ movableOffsets, setMovableOffsets ] = useState({ x: 0, y: 0 });
-	const [ movableActive, setMovableActive ] = useState(false);
-	const [ resizbleActive, setResizbleActive ] = useState(false);
+	const [ movableOffsets, setMovableOffsets ] = React.useState({ x: 0, y: 0 });
+	const [ movableActive, setMovableActive ] = React.useState(false);
+	const [ resizbleActive, setResizbleActive ] = React.useState(false);
 
-	const movableRef = useRef(null);
+	const movableRef = React.useRef(null);
 
 	const getParentElementPosition = () => {
 		const parent = movableRef.current.parentNode;
@@ -51,6 +51,7 @@ export default function MovableResizble({ useParentBounds }: MovableResizbleProp
 			case 'top-right':
 			case 'top-left': {
 				maxHeight = movableParent.height - (movableParent.bottom - rect.bottom);
+				brack;
 			}
 
 			default: {
