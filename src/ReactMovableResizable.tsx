@@ -51,7 +51,7 @@ export default function MovableResizble({ useParentBounds }: MovableResizbleProp
 			case 'top-right':
 			case 'top-left': {
 				maxHeight = movableParent.height - (movableParent.bottom - rect.bottom);
-				brack;
+				break;
 			}
 
 			default: {
