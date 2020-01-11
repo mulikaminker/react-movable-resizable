@@ -1,6 +1,6 @@
 # react-movable-resizable
 
-> 
+>
 
 [![NPM](https://img.shields.io/npm/v/react-movable-resizable.svg)](https://www.npmjs.com/package/react-movable-resizable
 ) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
@@ -17,7 +17,7 @@ npm install --save react-movable-resizable
 ```tsx
 import * as React from 'react'
 
-import ReactmovableResizable from 'react-resizable-draggable'
+import ReactMovableResizable from 'react-movable-resizable'
 
 class Example extends React.Component {
   render () {
@@ -28,6 +28,16 @@ class Example extends React.Component {
 }
 ```
 
+## Props
+
+```javascript
+
+ {
+   useParentBounds: boolean | default: false
+ }
+
+```
+
 ## License
 
-MIT © [shmulikkaminker](https://github.com/shmulikkaminker)
+MIT © [mulikaminker](https://github.com/mulikaminker)
