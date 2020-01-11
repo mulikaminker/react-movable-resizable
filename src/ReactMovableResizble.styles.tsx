@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export const Movable = styled.div.attrs(
-	(props: { width: number; height: number; x: number; y: number; maxHeight: number })  : any => ({
+export const MovableStyled = styled.div.attrs(
+	(props: { width: number; height: number; x: number; y: number; maxHeight: number }): any => ({
 		style: {
 			width: `${props.width}px`,
 			height: `${props.height}px`,
@@ -17,7 +17,7 @@ export const Movable = styled.div.attrs(
   min-width: 50px;
 `;
 
-export const Resizer = styled.div`
+export const ResizerStyled = styled.div`
 	width: 20px;
 	height: 20px;
 	border-radius: 50%;
