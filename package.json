@@ -1,6 +1,6 @@
 {
 	"name": "react-movable-resizable",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"description": "",
 	"author": "mulikaminker",
 	"license": "MIT",
@@ -17,14 +17,11 @@
 		"test:watch": "react-scripts-ts test --env=jsdom",
 		"build": "rollup -c",
 		"start": "rollup -c -w",
-		"prepare": "npm run build",
-		"predeploy": "cd example && npm install && npm run build",
-		"deploy": "gh-pages -d example/build",
-		"storybook": "start-storybook"
+		"prepare": "npm run build"
 	},
 	"dependencies": {
-			"styled-components": "^4.4.1"
-},
+		"styled-components": "^4.4.1"
+	},
 	"peerDependencies": {
 		"prop-types": "^15.5.4",
 		"react": "^16.12.0",
@@ -44,6 +41,7 @@
 		"cross-env": "^5.1.4",
 		"gh-pages": "^1.2.0",
 		"react": "^16.12.0",
+		"react-docgen-typescript-webpack-plugin": "^1.1.0",
 		"react-dom": "^16.12.0",
 		"react-scripts-ts": "^2.16.0",
 		"rollup": "^0.62.0",

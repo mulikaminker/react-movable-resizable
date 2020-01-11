@@ -5,6 +5,11 @@
 [![NPM](https://img.shields.io/npm/v/react-movable-resizable.svg)](https://www.npmjs.com/package/react-movable-resizable
 ) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+### Live Demo
+
+[click here](https://mulikaminker.github.io/react-movable-resizable/)
+
+
 ## Install
 
 ```bash

@@ -1,7 +1,7 @@
 {
 	"name": "react-movable-resizable-example",
 	"homepage": "https://mulikaminker.github.io/react-movable-resizable",
-	"version": "0.0.0",
+	"version": "0.0.3",
 	"license": "MIT",
 	"private": true,
 	"dependencies": {
@@ -15,6 +15,16 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test --env=jsdom",
-		"eject": "react-scripts eject"
+		"eject": "react-scripts eject",
+		"storybook": "start-storybook -p 9009 -s public",
+		"deploy-storybook": "storybook-to-ghpages",
+		"build-storybook": "build-storybook -c .storybook -o .out",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d build"
+	},
+	"devDependencies": {
+		"@storybook/react": "^5.3.0",
+		"@storybook/storybook-deployer": "^2.8.1",
+		"gh-pages": "^2.2.0"
 	}
 }
