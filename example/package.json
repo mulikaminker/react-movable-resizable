@@ -1,20 +1,20 @@
 {
-  "name": "react-movable-resizable-example",
-  "homepage": "https://mulikaminker.github.io/react-movable-resizable",
-  "version": "0.0.0",
-  "license": "MIT",
-  "private": true,
-  "dependencies": {
-    "prop-types": "^15.6.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-movable-resizable": "file:..",
-    "react-scripts": "^1.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+	"name": "react-movable-resizable-example",
+	"homepage": "https://mulikaminker.github.io/react-movable-resizable",
+	"version": "0.0.0",
+	"license": "MIT",
+	"private": true,
+	"dependencies": {
+		"prop-types": "^15.6.2",
+		"react-dom": "^16.12.0",
+		"react": "file:../node_modules/react",
+		"react-movable-resizable": "file:..",
+		"react-scripts": "^1.1.4"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test --env=jsdom",
+		"eject": "react-scripts eject"
+	}
 }

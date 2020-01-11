@@ -4,8 +4,11 @@ import React, {
 
 import ReactMovableResizable from 'react-movable-resizable';
 
+var a =1;
+var a = 2;
+
 export default class App extends Component {
-  render() {
+      render() {
     return (
       <ReactMovableResizable useParent />
 
