@@ -20,3 +20,16 @@ export const getParentElementPosition = (movableRef: any) => {
         maxRight: right - resizrePosition.width
     };
 };
+
+
+export const getPropertyStyleValueByProp = (element: HTMLElement, prop: string): number => {
+    return parseFloat(getComputedStyle(element)[prop]);
+};
+
+export const calcElemInnerBox = (element: HTMLElement): number => {
+    const padding = getPropertyStyleValueByProp(element, 'paddingLeft') +
+        getPropertyStyleValueByProp(element, 'paddingRight');
+    const borderWidth = getPropertyStyleValueByProp(element, 'borderWidth')
+
+    return borderWidth - padding;
+}

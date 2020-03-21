@@ -1,29 +1,38 @@
 import styled from 'styled-components';
 
 export const MovableStyled = styled.div.attrs(
-	(props: { width: number; height: number; x: number; y: number; maxHeight: number }): any => ({
+	(props: { width: number; height: number;
+		 x: number; y:
+		 number; maxHeight:
+		 number; maxWidth: number;
+		  hideBorder: boolean  }) : any => ({
 		style: {
 			width: `${props.width}px`,
 			height: `${props.height}px`,
-			transform: `translate(${props.x}px, ${props.y}px)`,
-			maxHeight: `${props.maxHeight}px`
+			left: `${props.x}px`,
+			top: `${props.y}px`,
+			maxWidth: `${props.width}px`,
+			border: `${!props.hideBorder && '1px solid #000'}`
 		}
 	})
 )`
-  border: 1px red solid;
-  box-sizing: border-box;
-  position: absolute;
   min-height: 50px;
   min-width: 50px;
+	position: absolute;
+	box-sizing: border-box;
 `;
 
-export const ResizerStyled = styled.div`
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
-	background: #d5d6f3;
-	border: 2px solid #ffffff;
-	position: absolute;
+export const ResizerStyled = styled.div.attrs(
+	(props: { hideHandlers: boolean  }): any => ({
+		style: {
+			background: `${props.hideHandlers ? 'transparent': '#000'}`
+		}
+	})
+)`
+width: 10px;
+height: 10px;
+position: absolute;
+
 
 	&.top-left {
 		left: -5px;

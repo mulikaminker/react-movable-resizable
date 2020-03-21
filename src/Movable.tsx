@@ -1,15 +1,18 @@
 import * as React from 'react';
 
 import { Context } from './context/movable-resizble.context';
+import { getPropertyStyleValueByProp, calcElemInnerBox} from './utils';
 
 import { MovableStyled } from './ReactMovableResizble.styles';
 
 export type MovableProps = {
-	useParentBounds: boolean;
-	children: React.ReactNode;
+	useParentBounds?: boolean;
+	hideBorder?: boolean;
+	children?: React.ReactNode;
+	hideHandlers?: boolean;
 };
 
-const Movable = ({ useParentBounds, children }: MovableProps) => {
+const Movable = ({ useParentBounds, children, hideBorder }: MovableProps) => {
 	const {
 		positions,
 		setPositions,
@@ -33,10 +36,13 @@ const Movable = ({ useParentBounds, children }: MovableProps) => {
 		let xPosition = newX,
 			yPosition = newY;
 
+		const parentInnerBoxSpacing = calcElemInnerBox(movableEl.parentNode)
+
 		const maxParentleft = movableParent.left - rect.left;
-		const maxParentRight = movableParent.right - movableParent.left - rect.width;
-		const maxParentTop = movableParent.top - rect.top;
-		const maxParentBottom = movableParent.bottom - movableParent.top - rect.height;
+		const maxParentRight = (movableParent.right - movableParent.left) - rect.width - parentInnerBoxSpacing;
+		const maxParentTop = movableParent.top - rect.top - parentInnerBoxSpacing;
+		const maxParentBottom = movableParent.bottom - movableParent.top - rect.height - parentInnerBoxSpacing;
+
 
 		if (newX < maxParentleft) {
 			xPosition = 0;
@@ -84,10 +90,10 @@ const Movable = ({ useParentBounds, children }: MovableProps) => {
 				y: newY
 			});
 
-			setOffsets({
-				x: newX,
-				y: newY
-			});
+						setOffsets({
+							x: newX,
+							y: newY
+						});
 		};
 
 		const onMovableMouseUp = () => {
@@ -114,6 +120,7 @@ const Movable = ({ useParentBounds, children }: MovableProps) => {
 			y={positions.y}
 			maxWidth={positions.maxWidth}
 			maxHeight={positions.maxHeight}
+			hideBorder={hideBorder}
 		>
 			{children}
 		</MovableStyled>

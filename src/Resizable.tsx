@@ -2,180 +2,232 @@ import * as React from 'react';
 
 import { Context } from './context/movable-resizble.context';
 import { reizersMap } from './reizersMap';
-import { getNameFromClassList } from './utils';
+import { getNameFromClassList, getPropertyStyleValueByProp} from './utils';
+import { ResizbleProps } from './types';
 
-import { ResizerStyled } from './ReactMovableResizble.styles';
+			import { ResizerStyled } from './ReactMovableResizble.styles';
 
-export type ResizbleProps = {
-	useParentBounds: boolean;
-};
+			const Resizble = ({ useParentBounds, children, hideHandlers }: ResizbleProps) => {
+				const { positions, setPositions, setOffsets, movableActive, setResizbleActive, movableRef } = React.useContext(
+					Context
+				);
 
-const Resizble = ({ useParentBounds}: ResizbleProps) => {
-	const {
-		positions,
-		setPositions,
-		setOffsets,
-		movableActive,
-		setResizbleActive,
-		movableRef
-	} = React.useContext(Context);
+				const reizablePropertiesMap = [
+					{ name: 'prevRight', property: 'right' },
+					{ name: 'prevTop', property: 'top' },
+					{ name: 'prevBottom', property: 'bottom' },
+					{ name: 'prevLeft', property: 'left' },
+					{ name: 'prevWidth', property: 'width' },
+					{ name: 'prevHeight', property: 'height' },
+					{ name: 'minWidth', property: 'min-width' },
+					{ name: 'maxRight', property: 'right' }
+				];
 
-	const getParentElementPosition = () => {
-		const parent = movableRef.current.parentNode;
-		const { bottom, height, left, right, top, width } = parent.getBoundingClientRect();
+				const getPrevReizableStyle = (element: HTMLElement) => {
+					return reizablePropertiesMap.map((prop) => {
+						return getPropertyStyleValueByProp(element, prop.property);
+					});
+				};
 
-		const resizrePosition = movableRef.current.getBoundingClientRect();
+				const getResizableMaxHeight = (position: string): number => {
+					const resizerEl = movableRef.current;
+					const rect = resizerEl.getBoundingClientRect();
+					const movableParent = resizerEl.parentNode.getBoundingClientRect();
+					const prevHeight = parseFloat(getComputedStyle(resizerEl, null).getPropertyValue('height').replace('px', ''));
 
-		return {
-			maxWidth: width,
-			maxTop: top,
-			maxLeft: left,
-			maxHeight: height,
-			maxBottom: bottom - resizrePosition.height,
-			bottom: bottom,
-			right: right,
-			maxRight: right - resizrePosition.width
-		};
-	};
+					let maxHeight;
 
-	const getResizableMaxHeight = (position: string): number => {
-		const resizerEl = movableRef.current;
-		const rect = resizerEl.getBoundingClientRect();
-		const movableParent = resizerEl.parentNode.getBoundingClientRect();
+					switch (position) {
+						case 'top-right':
+						case 'top-left': {
+							maxHeight = resizerEl.offsetTop + prevHeight;
+							break;
+						}
 
-		let maxHeight;
+						case 'bottom-right':
+						case 'bottom-left': {
+							maxHeight = movableParent.height - (resizerEl.parentNode.offsetTop + rect.height)
+							break;
+						}
+					}
+					return maxHeight;
+				};
 
-		switch (position) {
-			case 'top-right':
-			case 'top-left': {
-				maxHeight = movableParent.height - (movableParent.bottom - rect.bottom);
-				break;
-			}
+				const getResizableMaxRight = (): number => {
+					const resizerEl = movableRef.current;
+					const childLeft = parseFloat(getComputedStyle(resizerEl, null).getPropertyValue('left').replace('px', ''));
+					const parent = movableRef.current.parentNode;
+					const width = parseFloat(getComputedStyle(parent, null).getPropertyValue('width').replace('px', ''));
+					const maxRight = width - childLeft;
 
-			default: {
-				maxHeight = movableParent.height;
-			}
-		}
-		return maxHeight;
-	};
+					return maxRight;
+				};
 
-	const onResizerMouseDown = (e: React.MouseEvent): boolean | void => {
-		if (movableActive) return false;
-		e.stopPropagation();
+				let prevX = 0;
+				let prevY = 0;
+				let prevRight = 0;
+				let prevWidth = 0;
+				let prevHeight = 0;
+				let prevLeft = 0;
+				let prevTop = 0;
+				let prevBottom = 0;
+				let minWidth = 0;
 
-		const activeResizer = e.target as Element;
-		const position = getNameFromClassList(activeResizer.classList);
-		const resizerEl = movableRef.current;
-		const rect = resizerEl.getBoundingClientRect();
-		const movableParent = resizerEl.parentNode.getBoundingClientRect();
+				const onResizerMouseDown = (e: React.MouseEvent): boolean | void => {
+					if (movableActive) return false;
+					e.stopPropagation();
 
-		let prevX = e.clientX;
-		let prevY = e.clientY < movableParent.top ? movableParent.top : e.clientY;
-		let prevRight = rect.right;
-		let newMaxHeight = getResizableMaxHeight(position);
+					const activeResizer = e.target as Element;
+					const resizerEl = movableRef.current;
 
-		const onResizableMouseUp = () => {
-			window.removeEventListener('mousemove', onResizableMouseMove);
-			setResizbleActive(false);
-		};
+					prevX = e.pageX;
+					prevY = e.pageY;
+					[prevRight, prevTop, prevBottom, prevLeft, prevWidth, prevHeight, minWidth] = getPrevReizableStyle(resizerEl);
 
-		const onResizableMouseMove = (e: MouseEvent): void => {
-			const resizerEl = movableRef.current;
-			const rect = resizerEl.getBoundingClientRect();
+					const maxRight = getResizableMaxRight();
+					const maxWidth = prevWidth + resizerEl.offsetLeft;
 
-			let newWidth;
-			let newHeight;
-			let newX = positions.x;
-			let newY = positions.y;
-			const { maxTop, maxWidth, bottom, right } = getParentElementPosition();
+					const onResizableMouseUp = () => {
+						window.removeEventListener('mousemove', onResizableMouseMove);
+						setResizbleActive(false);
+					};
 
-			let clientY = e.clientY < maxTop ? maxTop : e.clientY;
+					const onResizableMouseMove = (e: MouseEvent): void => {
+						const resizerEl = movableRef.current;
+						const pageY = e.pageY, pageX = e.pageX
 
-			if(useParentBounds) {
-				//TODO
-			}
+						const activeResizerClassName = getNameFromClassList(activeResizer.classList);
 
-			if (activeResizer.classList.contains('bottom-right')) {
-				if (rect.left + rect.width - (prevX - e.clientX) > right) {
-					newWidth = right - rect.left;
-				} else {
-					newWidth = rect.width - (prevX - e.clientX);
+						const maxParentBottom = getPropertyStyleValueByProp(resizerEl.parentNode, 'height') - (resizerEl.offsetTop);
+						const maxBottom = prevHeight + prevTop - minWidth;
+
+						let { width, height, x = positions.x, y = positions.y } = calcResizablePositionByClass({
+							className: activeResizerClassName,
+							pageX, pageY, prevX, prevY,
+							prevTop, prevWidth, prevHeight, prevLeft,
+							minWidth, maxBottom, x: positions.x, y: positions.y
+						})
+
+						if (useParentBounds) {
+							const maxHeight = getResizableMaxHeight(activeResizerClassName)
+							const parentBounds = getMaxPositionByParent({className: activeResizerClassName,
+								 height, maxHeight, width,
+								  maxRight, x, y, maxWidth, maxParentBottom })
+							width = parentBounds.width;
+							height = parentBounds.height;
+							x = parentBounds.x;
+							y = parentBounds.y
+
+						}
+
+						setPositions({
+							...positions,
+							x,
+							y,
+							width,
+							height
+						});
+
+						setOffsets({
+							x,
+							y
+						})
+
+
+					};
+
+					window.addEventListener('mousemove', onResizableMouseMove);
+					window.addEventListener('mouseup', onResizableMouseUp);
+				};
+
+
+				const calcResizablePositionByClass = ({ className, pageX, pageY, prevX, prevY,
+					prevTop, prevWidth, prevHeight, prevLeft, minWidth, maxBottom }: any) => {
+					const positionClasses = {
+						'bottom-right': {
+							width: prevWidth + (pageX - prevX),
+							height: prevHeight + (pageY - prevY)
+						},
+						'bottom-left': {
+							width: prevWidth - (pageX - prevX),
+							x: calcXPositionByMaxLeft({ prevLeft, prevWidth, minWidth, x: prevLeft + (pageX - prevX) }),
+							height: prevHeight + (pageY - prevY), maxBottom,
+						},
+						'top-right': {
+							width: prevWidth + (pageX - prevX),
+							height: prevHeight - (pageY - prevY),
+							y: calcYPositionByMaxBottom({ y: prevTop + (pageY - prevY), maxBottom }),
+						},
+						'top-left': {
+							width: prevWidth - (pageX - prevX),
+							height: prevHeight - (pageY - prevY),
+							y: calcYPositionByMaxBottom({ y: prevTop + (pageY - prevY), maxBottom }),
+							x: calcXPositionByMaxLeft({ prevLeft, prevWidth, minWidth, x: prevLeft + (pageX - prevX) }),
+						},
+					}
+
+					return positionClasses[className]
+
 				}
 
-				if (rect.top + rect.height - (prevY - e.clientY) > bottom) {
-					newHeight = bottom - rect.top;
-				} else {
-					newHeight = rect.height - (prevY - e.clientY);
-				}
-			} else if (activeResizer.classList.contains('bottom-left')) {
-				newWidth = rect.width + (prevX - e.clientX);
-				newX = positions.x - (newWidth - positions.width);
+				const getMaxPositionByParent = ({ className, height,maxParentBottom,
+					 maxRight, width, x, y, maxWidth, maxHeight }: any) => {
 
-				if (newX < 0) {
-					newWidth = maxWidth - (right - prevRight);
-					newX = maxWidth - (right - prevRight) - newWidth;
-				}
-				if (rect.top + rect.height - (prevY - e.clientY) > bottom) {
-					newHeight = bottom - rect.top;
-				} else {
-					newHeight = rect.height - (prevY - e.clientY);
-				}
-			} else if (activeResizer.classList.contains('top-right')) {
-				if (rect.left + rect.width - (prevX - e.clientX) > right) {
-					newWidth = right - rect.left;
-				} else {
-					newWidth = rect.width - (prevX - e.clientX);
-				}
+					const positionClasses = {
+						'bottom-right': {
+							height: height > maxParentBottom ? maxParentBottom : height,
+							width: width > maxRight ? maxRight : width,
+							x,
+							y
+						},
+						'bottom-left': {
+							height: height > maxParentBottom ? maxParentBottom : height,
+							x: x < 0 ? 0: x,
+							width: x < 0 ? maxWidth : width,
+							y
+						},
+						'top-right': {
+							width: width > maxRight ? maxRight : width,
+							y: y < 0 ? 0: y,
+							height: y < 0 ? maxHeight : height,
+							x
+						},
+						'top-left': {
+							x: x < 0 ? 0: x,
+							width: x < 0 ? maxWidth : width,
+							y: y < 0 ? 0: y,
+							height: y < 0 ? maxHeight : height,
+						}
+					}
 
-				newHeight = rect.height + (prevY - clientY);
-				newY = positions.y - (newHeight - positions.height);
+					return positionClasses[className]
 
-				newY = newY < 0 ? 0 : newY;
-			} else if (activeResizer.classList.contains('top-left')) {
-				newWidth = rect.width + (prevX - e.clientX);
-				newX = positions.x - (newWidth - positions.width);
-				if (newX < 0) {
-					newWidth = maxWidth - (right - prevRight);
-					newX = maxWidth - (right - prevRight) - newWidth;
 				}
 
-				newHeight = rect.height + (prevY - e.clientY);
-				newY = positions.y - (newHeight - positions.height);
-				newY = newY < 0 ? 0 : newY;
-			}
+				const calcXPositionByMaxLeft = ({ prevLeft, prevWidth, minWidth, x }: {
+					prevLeft: number,
+					prevWidth: number, minWidth: number, x: number
+				}): number => {
+					const maxLeft = prevLeft + prevWidth - minWidth;
+					return x < maxLeft ? x : maxLeft
+				}
 
-			setPositions({
-				...positions,
-				x: newX,
-				y: newY,
-				width: newWidth,
-				height: newHeight,
-				maxHeight: newMaxHeight > movableParent.height ? movableParent.height : newMaxHeight
-			});
-			setOffsets({
-				x: newX,
-				y: newY
-			});
+				const calcYPositionByMaxBottom = ({ maxBottom, y }: { maxBottom: number, y: number }): number => {
+					return y < maxBottom ? y : maxBottom
+				}
 
-			prevY = clientY;
-			prevX = e.clientX;
-		};
+				return (
+					<React.Fragment>
+						{reizersMap.map(({ className }) => (
+							<ResizerStyled className={className}
+							onMouseDown={onResizerMouseDown}
+							key={className}
+							hideHandlers={hideHandlers} />
+						))}
+						{children}
+					</React.Fragment>
 
-		window.addEventListener('mousemove', onResizableMouseMove);
-		window.addEventListener('mouseup', onResizableMouseUp);
-	};
+				);
+			};
 
-	return (
-		<>
-			{reizersMap.map(({ className }) => (
-				<ResizerStyled
-					className={className}
-					onMouseDown={onResizerMouseDown}
-					key={className}
-					/>
-			))}
-			</>
-	);
-}
-
-export default Resizble
+			export default Resizble;
