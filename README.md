@@ -43,8 +43,8 @@ class Example extends React.Component {
    maxHeight: number,
    className: string,
    children: React.ReactNode,
-    hideHandlers: boolean,
-    hideBorder: boolean
+   hideHandlers: boolean | default: false,
+   hideBorder: boolean | default: false
  }
 
 ```
