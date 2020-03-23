@@ -5,7 +5,7 @@
 [![NPM](https://img.shields.io/npm/v/react-movable-resizable.svg)](https://www.npmjs.com/package/react-movable-resizable
 ) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-### Live Demo
+### storybook
 
 [click here](https://mulikaminker.github.io/react-movable-resizable/)
 
@@ -38,7 +38,13 @@ class Example extends React.Component {
 ```javascript
 
  {
-   useParentBounds: boolean | default: false
+   useParentBounds: boolean | default: false,
+   maxWidth: number,
+   maxHeight: number,
+   className: string,
+   children: React.ReactNode,
+    hideHandlers: boolean,
+    hideBorder: boolean
  }
 
 ```

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Context } from './context/movable-resizble.context';
-import { getPropertyStyleValueByProp, calcElemInnerBox} from './utils';
+import { calcElemInnerBox} from './utils/general';
 
 import { MovableStyled } from './ReactMovableResizble.styles';
 

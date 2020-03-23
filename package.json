@@ -1,7 +1,7 @@
 {
 	"name": "react-movable-resizable",
-	"version": "1.0.11",
-	"description": "",
+	"version": "1.0.12",
+	"description": "react movable resizable component, based on styled-components",
 	"author": "mulikaminker",
 	"license": "MIT",
 	"repository": "mulikaminker/react-movable-resizable",
