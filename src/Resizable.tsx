@@ -9,7 +9,7 @@ import { ResizbleProps } from './types';
 
 import { ResizerStyled } from './ReactMovableResizble.styles';
 
-			const Resizble = ({ useParentBounds, children, hideHandlers }: ResizbleProps) => {
+			const Resizble = ({ useParentBounds, children, hideHandlers, handlersColor = '#000' }: ResizbleProps) => {
 				const { positions, setPositions, setOffsets, movableActive, setResizbleActive, movableRef } = React.useContext(
 					Context
 				);
@@ -147,6 +147,7 @@ import { ResizerStyled } from './ReactMovableResizble.styles';
 					<React.Fragment>
 						{reizersMap.map(({ className }) => (
 							<ResizerStyled className={className}
+							handlersColor={handlersColor}
 							onMouseDown={onResizerMouseDown}
 							key={className}
 							hideHandlers={hideHandlers} />

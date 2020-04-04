@@ -6,6 +6,7 @@ export type ResizbleProps = {
 	children?: React.ReactNode;
 	 hideHandlers?: boolean;
 	 hideBorder?: boolean;
+	 handlersColor: string;
 };
 
 

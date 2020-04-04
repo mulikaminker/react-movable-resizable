@@ -44,7 +44,9 @@ class Example extends React.Component {
    className: string,
    children: React.ReactNode,
    hideHandlers: boolean | default: false,
-   hideBorder: boolean | default: false
+   hideBorder: boolean | default: false,
+   handlersColor: string | default: '#000',
+   borderColor: string | default: '#000'
  }
 
 ```

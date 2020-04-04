@@ -5,14 +5,14 @@ export const MovableStyled = styled.div.attrs(
 		 x: number; y:
 		 number; maxHeight:
 		 number; maxWidth: number;
-		  hideBorder: boolean  }) : any => ({
+		  hideBorder: boolean; borderColor: string }) : any => ({
 		style: {
 			width: `${props.width}px`,
 			height: `${props.height}px`,
 			left: `${props.x}px`,
 			top: `${props.y}px`,
 			maxWidth: `${props.width}px`,
-			border: `${!props.hideBorder && '1px solid #000'}`
+			border: `${!props.hideBorder && `1px solid ${props.borderColor}`}`
 		}
 	})
 )`
@@ -23,9 +23,9 @@ export const MovableStyled = styled.div.attrs(
 `;
 
 export const ResizerStyled = styled.div.attrs(
-	(props: { hideHandlers: boolean  }): any => ({
+	(props: { hideHandlers: boolean, handlersColor: string  }): any => ({
 		style: {
-			background: `${props.hideHandlers ? 'transparent': '#000'}`
+			background: `${props.hideHandlers ? 'transparent': props.handlersColor}`
 		}
 	})
 )`

@@ -10,9 +10,10 @@ export type MovableProps = {
 	hideBorder?: boolean;
 	children?: React.ReactNode;
 	hideHandlers?: boolean;
+	borderColor?: string;
 };
 
-const Movable = ({ useParentBounds, children, hideBorder }: MovableProps) => {
+const Movable = ({ useParentBounds, children, hideBorder, borderColor = '#000' }: MovableProps) => {
 	const {
 		positions,
 		setPositions,
@@ -121,6 +122,7 @@ const Movable = ({ useParentBounds, children, hideBorder }: MovableProps) => {
 			maxWidth={positions.maxWidth}
 			maxHeight={positions.maxHeight}
 			hideBorder={hideBorder}
+			borderColor={borderColor}
 		>
 			{children}
 		</MovableStyled>
