@@ -13,6 +13,9 @@ export type MovableProps = {
 	borderColor?: string;
 	gridBackground?: boolean;
 	onDrag?: Function;
+	initialWidth?: number,
+	initialHeight?: number,
+
 };
 
 const Movable = ({ useParentBounds,
@@ -20,6 +23,7 @@ const Movable = ({ useParentBounds,
 	 hideBorder,
 	 borderColor = '#000',
 	 onDrag = () => {},
+	 initialWidth = 100, initialHeight = 100,
 	 gridBackground = false}: MovableProps) => {
 	const {
 		positions,
@@ -34,6 +38,10 @@ const Movable = ({ useParentBounds,
 	React.useEffect(()=> {
 		onDrag(null, {positions});
 	}, [positions])
+
+	React.useEffect(()=> {
+		setPositions({...positions, width: initialWidth, height: initialHeight})
+	}, [initialWidth, initialHeight])
 
 
 	const getMovableParentBounds = ({

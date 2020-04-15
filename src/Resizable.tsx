@@ -11,15 +11,11 @@ import { ResizerStyled } from './ReactMovableResizble.styles';
 
 			const Resizble = ({ useParentBounds,
 				children, hideHandlers,
-				handlersColor = '#000', width = 100, height = 100,
+				handlersColor = '#000'
 			}: ResizbleProps) => {
 				const { positions, setPositions, setOffsets, movableActive, setResizbleActive, movableRef } = React.useContext(
 					Context
 				);
-
-				React.useEffect(()=> {
-					setPositions({...positions, width, height})
-				}, [])
 
 				const reizablePropertiesMap = [
 					{ name: 'prevRight', property: 'right' },

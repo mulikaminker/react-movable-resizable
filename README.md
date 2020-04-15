@@ -42,6 +42,8 @@ class Example extends React.Component {
    maxWidth: number,
    maxHeight: number,
    className: string,
+   initialWidth: number  | default: 100,
+   initialHeight: number | default: 100,
    children: React.ReactNode,
    hideHandlers: boolean | default: false,
    hideBorder: boolean | default: false,
