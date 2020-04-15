@@ -21,11 +21,11 @@ export const MovableStyled = styled.div.attrs(
   min-width: 50px;
 	position: absolute;
 	box-sizing: border-box;
-	background-size: 33.33333% 33.33333%;
-	background-position: 12% -13%;
+	background-size: 35.33333% 35.33333%;
+	background-position: -4% -5%;
 	background-image: ${(props: any) => props.gridBackground &&
-	`linear-gradient(from 0.5px 0.0px to 10.5px  0.0px, repeat, black 5%, transparent 5%),
-    linear-gradient(from 0.0px 0.5px to  0.0px 10.5px, repeat, black 5%, transparent 5%);`}
+    `linear-gradient(to right, ${props.borderColor} 1px, transparent 1px),
+    linear-gradient(to bottom, ${props.borderColor} 1px, transparent 1px)`};
 `;
 
 export const ResizerStyled = styled.div.attrs(

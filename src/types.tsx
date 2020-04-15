@@ -9,6 +9,7 @@ export type ResizbleProps = {
 	 hideHandlers?: boolean;
 	 hideBorder?: boolean;
 	 handlersColor?: string;
+	 borderColor?: string;
 	 gridBackground?: boolean;
 	 onDrag?: Function;
 };
