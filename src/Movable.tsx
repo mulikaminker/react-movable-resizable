@@ -11,9 +11,16 @@ export type MovableProps = {
 	children?: React.ReactNode;
 	hideHandlers?: boolean;
 	borderColor?: string;
+	gridBackground?: boolean;
+	onDrag?: Function;
 };
 
-const Movable = ({ useParentBounds, children, hideBorder, borderColor = '#000' }: MovableProps) => {
+const Movable = ({ useParentBounds,
+	 children,
+	 hideBorder,
+	 borderColor = '#000',
+	 onDrag = () => {},
+	 gridBackground = false}: MovableProps) => {
 	const {
 		positions,
 		setPositions,
@@ -23,6 +30,11 @@ const Movable = ({ useParentBounds, children, hideBorder, borderColor = '#000' }
 		resizbleActive,
 		movableRef
 	} = React.useContext(Context);
+
+	React.useEffect(()=> {
+		onDrag(null, {positions});
+	}, [positions])
+
 
 	const getMovableParentBounds = ({
 		newX,
@@ -66,7 +78,6 @@ const Movable = ({ useParentBounds, children, hideBorder, borderColor = '#000' }
 
 	const onMovableMouseDown = (e: React.MouseEvent) => {
 		if (resizbleActive) return;
-
 		e.preventDefault();
 
 		let newX: number,
@@ -123,6 +134,8 @@ const Movable = ({ useParentBounds, children, hideBorder, borderColor = '#000' }
 			maxHeight={positions.maxHeight}
 			hideBorder={hideBorder}
 			borderColor={borderColor}
+			gridBackground={gridBackground}
+
 		>
 			{children}
 		</MovableStyled>

@@ -4,14 +4,17 @@ import React, {
 
 import ReactMovableResizable from 'react-movable-resizable';
 
-export default class App extends Component {
-  render() {
+
+export default () => {
     return (
       <div style={{ width: '500px', height: '500px', border: '3px #ccc solid', position: 'relative'}}>
-        <ReactMovableResizable useParentBounds={true} borderColor="red" handlersColor="red">
+        <ReactMovableResizable useParentBounds={true}
+        gridBackground
+         borderColor="red"
+         onDrag={(e, {positions})=> console.log(positions)}
+          handlersColor="red" width={200} height={300}>
         </ReactMovableResizable>
       </div >
 
     );
   }
-}

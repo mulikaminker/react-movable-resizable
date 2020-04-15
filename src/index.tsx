@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ContextProvider } from './context/movable-resizble.context';
+import { ContextProvider} from './context/movable-resizble.context';
 import Movable from './Movable';
 import Resizble from './Resizable';
 import { ResizbleProps } from './types';

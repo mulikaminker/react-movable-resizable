@@ -2,11 +2,15 @@ export type ResizbleProps = {
 	useParentBounds?: boolean;
 	maxWidth?: number;
 	maxHeight?: number;
+	width?: number;
+	height?: number;
 	className?: string;
 	children?: React.ReactNode;
 	 hideHandlers?: boolean;
 	 hideBorder?: boolean;
-	 handlersColor: string;
+	 handlersColor?: string;
+	 gridBackground?: boolean;
+	 onDrag?: Function;
 };
 
 

@@ -46,7 +46,9 @@ class Example extends React.Component {
    hideHandlers: boolean | default: false,
    hideBorder: boolean | default: false,
    handlersColor: string | default: '#000',
-   borderColor: string | default: '#000'
+   borderColor: string | default: '#000',
+   gridBackground: boolean | default: false,
+   onDrag: callback |() => {x, y, width, height, maxWidth, maxHeight}
  }
 
 ```
