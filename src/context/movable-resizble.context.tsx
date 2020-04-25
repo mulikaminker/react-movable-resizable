@@ -15,7 +15,9 @@ const ContextProvider = ({ children }: MovableResizbleProps): JSX.Element => {
 		offsetRight: 0,
 		offsetBottom: 0,
 		offsetTop: 0,
-		offsetLeft: 0
+		offsetLeft: 0,
+		 left: 0,
+		 right: 0
 	});
 	const [ offsets, setOffsets ] = React.useState({ x: 0, y: 0 });
 	const [ movableActive, setMovableActive ] = React.useState(false);

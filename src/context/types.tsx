@@ -15,6 +15,8 @@ export type Position = {
 	offsetBottom: number;
 	offsetTop: number;
 	offsetLeft: number;
+	right: number;
+	left: number;
 };
 
 export type Offset = {

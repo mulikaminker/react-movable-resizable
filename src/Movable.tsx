@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Context } from './context/movable-resizble.context';
-import { calcElemInnerBox, getResizableOffsets} from './utils/general';
+import { calcElemInnerBox, getResizableOffsets, getPropertyStyleValueByProp} from './utils/general';
 
 import { MovableStyled } from './ReactMovableResizble.styles';
 
@@ -113,7 +113,9 @@ const Movable = ({ useParentBounds,
 				...positions,
 				x: newX,
 				y: newY,
-				offsetTop, offsetBottom, offsetLeft, offsetRight
+				offsetTop, offsetBottom, offsetLeft, offsetRight,
+				right: getPropertyStyleValueByProp(movableEl, 'right'),
+				left: getPropertyStyleValueByProp(movableEl, 'left')
 			});
 
 						setOffsets({

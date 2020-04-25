@@ -138,7 +138,9 @@ import { ResizerStyled } from './ReactMovableResizble.styles';
 							offsetTop,
 							offsetBottom,
 							offsetRight,
-							offsetLeft
+							offsetLeft,
+							right: getPropertyStyleValueByProp(resizerEl, 'right'),
+							left: getPropertyStyleValueByProp(resizerEl, 'left')
 						});
 
 						setOffsets({
