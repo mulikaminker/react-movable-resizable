@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Context } from './context/movable-resizble.context';
 import { reizersMap } from './reizersMap';
-import { getNameFromClassList, getPropertyStyleValueByProp} from './utils/general';
+import { getNameFromClassList, getPropertyStyleValueByProp, getResizableOffsets} from './utils/general';
 import { calcResizablePositionByClass, getMaxPositionByParent } from './utils/resizable';
 
 import { ResizbleProps } from './types';
@@ -82,8 +82,6 @@ import { ResizerStyled } from './ReactMovableResizble.styles';
 					if (movableActive) return false;
 					e.stopPropagation();
 
-
-
 					const activeResizer = e.target as Element;
 					const resizerEl = movableRef.current;
 
@@ -128,12 +126,19 @@ import { ResizerStyled } from './ReactMovableResizble.styles';
 
 						}
 
+
+						const {offsetTop, offsetBottom, offsetLeft, offsetRight} = getResizableOffsets(resizerEl, resizerEl.parentNode)
+
 						setPositions({
 							...positions,
 							x,
 							y,
 							width,
-							height
+							height,
+							offsetTop,
+							offsetBottom,
+							offsetRight,
+							offsetLeft
 						});
 
 						setOffsets({

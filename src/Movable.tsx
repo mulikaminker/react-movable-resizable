@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Context } from './context/movable-resizble.context';
-import { calcElemInnerBox} from './utils/general';
+import { calcElemInnerBox, getResizableOffsets} from './utils/general';
 
 import { MovableStyled } from './ReactMovableResizble.styles';
 
@@ -99,6 +99,11 @@ const Movable = ({ useParentBounds,
 			newX = e.clientX - prevX;
 			newY = e.clientY - prevY;
 
+			const movableEl = movableRef.current;
+
+			const {offsetTop, offsetBottom, offsetLeft, offsetRight} = getResizableOffsets(movableEl, movableEl.parentNode)
+
+
 			if (useParentBounds) {
 				const { xPosition, yPosition } = getMovableParentBounds({ newX, newY });
 				(newX = xPosition), (newY = yPosition);
@@ -107,7 +112,8 @@ const Movable = ({ useParentBounds,
 			setPositions({
 				...positions,
 				x: newX,
-				y: newY
+				y: newY,
+				offsetTop, offsetBottom, offsetLeft, offsetRight
 			});
 
 						setOffsets({

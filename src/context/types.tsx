@@ -11,6 +11,10 @@ export type Position = {
 	height: number;
 	maxWidth: number;
 	maxHeight: number;
+	offsetRight: number;
+	offsetBottom: number;
+	offsetTop: number;
+	offsetLeft: number;
 };
 
 export type Offset = {

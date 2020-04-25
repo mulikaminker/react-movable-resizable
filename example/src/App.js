@@ -13,7 +13,6 @@ export default () => {
         initialWidth={500}
         initialHeight={500}
          borderColor="red"
-         onDrag={(e, {positions})=> console.log(positions)}
           handlersColor="red" width={200} height={300}>
         </ReactMovableResizable>
       </div >

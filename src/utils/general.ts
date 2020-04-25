@@ -33,3 +33,15 @@ export const calcElemInnerBox = (element: HTMLElement): number => {
 
     return borderWidth - padding;
 }
+
+export const getResizableOffsets = (resizble: HTMLElement, parent: HTMLElement) => {
+
+    return {
+        offsetRight: getPropertyStyleValueByProp(resizble, 'right') - getPropertyStyleValueByProp(parent, 'right'),
+        offsetTop: resizble.offsetTop,
+        offsetLeft: resizble.offsetLeft,
+        offsetBottom: getPropertyStyleValueByProp(resizble, 'bottom') - getPropertyStyleValueByProp(parent, 'bottom')
+
+    }
+
+}

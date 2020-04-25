@@ -50,7 +50,10 @@ class Example extends React.Component {
    handlersColor: string | default: '#000',
    borderColor: string | default: '#000',
    gridBackground: boolean | default: false,
-   onDrag: callback |() => {x, y, width, height, maxWidth, maxHeight}
+   onDrag: callback |() => {x, y, width, height, maxWidth, maxHeight, offsetTop,
+   offsetBottom,
+   offsetRight,
+   offsetLeft}
  }
 
 ```
