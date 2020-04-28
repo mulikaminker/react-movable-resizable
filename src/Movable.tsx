@@ -26,7 +26,6 @@ const Movable = ({ useParentBounds,
 	 borderColor = '#000',
 	 onDrag = () => {},
 	 initialWidth = 100, initialHeight = 100,
-	 initialX = 0, initialY = 0,
 	 gridBackground = false}: MovableProps) => {
 	const {
 		positions,
@@ -43,9 +42,9 @@ const Movable = ({ useParentBounds,
 	}, [positions])
 
 	React.useEffect(()=> {
-		setPositions({...positions, width: initialWidth, height: initialHeight, x: initialX, y: initialY})
+		setPositions({...positions, width: initialWidth, height: initialHeight})
 		onDrag(null, {positions});
-	}, [initialWidth, initialHeight, initialX, initialY])
+	}, [initialWidth, initialHeight])
 
 
 	const getMovableParentBounds = ({
