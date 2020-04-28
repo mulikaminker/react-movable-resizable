@@ -15,6 +15,8 @@ export type MovableProps = {
 	onDrag?: Function;
 	initialWidth?: number,
 	initialHeight?: number,
+	initialX?: number,
+	initialY?: number
 
 };
 
@@ -24,6 +26,7 @@ const Movable = ({ useParentBounds,
 	 borderColor = '#000',
 	 onDrag = () => {},
 	 initialWidth = 100, initialHeight = 100,
+	 initialX = 0, initialY = 0,
 	 gridBackground = false}: MovableProps) => {
 	const {
 		positions,
@@ -40,8 +43,9 @@ const Movable = ({ useParentBounds,
 	}, [positions])
 
 	React.useEffect(()=> {
-		setPositions({...positions, width: initialWidth, height: initialHeight})
-	}, [initialWidth, initialHeight])
+		setPositions({...positions, width: initialWidth, height: initialHeight, x: initialX, y: initialY})
+		onDrag(null, {positions});
+	}, [initialWidth, initialHeight, initialX, initialY])
 
 
 	const getMovableParentBounds = ({
@@ -118,10 +122,10 @@ const Movable = ({ useParentBounds,
 				left: getPropertyStyleValueByProp(movableEl, 'left')
 			});
 
-						setOffsets({
+			setOffsets({
 							x: newX,
 							y: newY
-						});
+			});
 		};
 
 		const onMovableMouseUp = () => {

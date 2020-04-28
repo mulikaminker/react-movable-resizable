@@ -14,3 +14,5 @@ export default (props: ResizbleProps) => {
 		</ContextProvider>
 	);
 };
+
+export {Movable}
