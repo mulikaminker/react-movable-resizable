@@ -6,7 +6,6 @@ import ReactMovableResizable from 'react-movable-resizable';
 
 export default () => {
   const [positions, setPositions] = useState({x: 0, y: 0, width: 500, height: 500})
-  console.log({positions})
     return (
       <div>
       <input value={positions.x} onChange={(e)=> setPositions({...positions, x: e.target.value})}/>
@@ -17,11 +16,10 @@ export default () => {
         <ReactMovableResizable useParentBounds={true}
         gridBackground
         onDrag={( e, positions)=> setPositions(positions) }
-        initialWidth={positions.width}
-        initialHeight={positions.height}
-        initialX={positions.x}
-        initialY={positions.y}
-        width={positions.width}
+        initialWidth={200}
+        initialHeight={200}
+        initialX={500}
+        initialY={10}
          borderColor="red"
           handlersColor="red" width={200} height={300}>
         </ReactMovableResizable>
