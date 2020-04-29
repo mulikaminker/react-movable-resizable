@@ -16,7 +16,8 @@ export type MovableProps = {
 	initialWidth?: number,
 	initialHeight?: number,
 	initialX?: number,
-	initialY?: number
+	initialY?: number,
+	width?: number,
 
 };
 
@@ -25,8 +26,7 @@ const Movable = ({ useParentBounds,
 	 hideBorder,
 	 borderColor = '#000',
 	 onDrag = () => {},
-	 initialWidth = 100, initialHeight = 100,
-	 initialX = 0, initialY = 0,
+
 	 gridBackground = false}: MovableProps) => {
 	const {
 		positions,
@@ -38,21 +38,11 @@ const Movable = ({ useParentBounds,
 		movableRef
 	} = React.useContext(Context);
 
-	React.useEffect(()=> {
+	React.useEffect(() => {
 		const movableEl = movableRef.current;
-
 		const {offsetTop, offsetBottom, offsetLeft, offsetRight} = getResizableOffsets(movableEl, movableEl.parentNode)
-		onDrag(null, {...positions, offsetTop, offsetBottom, offsetLeft, offsetRight});
+		onDrag(null, {...positions, offsetTop, offsetBottom, offsetLeft, offsetRight})
 	}, [positions])
-
-	React.useEffect(()=> {
-
-		const x = initialX || positions.x;
-		const y = initialY || positions.y;
-		setPositions({...positions, width: initialWidth, height: initialHeight, x, y})
-		onDrag(null, {positions});
-	}, [initialWidth, initialHeight, initialX, initialY])
-
 
 	const getMovableParentBounds = ({
 		newX,

@@ -14,7 +14,7 @@ export type ResizbleProps = {
 	 onDrag?: Function;
 	 initialWidth?: number,
 	 initialHeight?: number,
-};
+\};
 
 
 export type CalcResizableTypes = {
