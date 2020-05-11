@@ -15,4 +15,10 @@ export default (props: ResizbleProps) => {
 	);
 };
 
-export {Movable}
+export const MovableComponent = (props: ResizbleProps) =>  {
+	return (
+		<ContextProvider>
+			<Movable {...props}/>
+		</ContextProvider>
+	);
+}

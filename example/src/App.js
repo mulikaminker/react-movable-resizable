@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 
 
-import ReactMovableResizable from 'react-movable-resizable';
+import ReactMovableResizable, {Movable} from 'react-movable-resizable';
 
 
 export default () => {
