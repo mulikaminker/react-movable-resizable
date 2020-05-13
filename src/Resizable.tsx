@@ -78,6 +78,87 @@ import { ResizerStyled } from './ReactMovableResizble.styles';
 				let prevBottom = 0;
 				let minWidth = 0;
 
+				const onResizerTouchStart = (e: React.TouchEvent):  boolean | void => {
+
+					if (movableActive) return false;
+					e.stopPropagation();
+
+					const activeResizer = e.target as Element;
+					const resizerEl = movableRef.current;
+
+					const event = e.touches[0]
+
+					prevX = event.pageX;
+					prevY = event.pageY;
+					[prevRight, prevTop, prevBottom, prevLeft, prevWidth, prevHeight, minWidth] = getPrevReizableStyle(resizerEl);
+
+					const maxRight = getResizableMaxRight();
+					const maxWidth = prevWidth + resizerEl.offsetLeft;
+
+					const onResizableTouchEnd = () => {
+						window.removeEventListener('touchmove', onResizerTouchMove);
+						setResizbleActive(false);
+					};
+
+					const onResizerTouchMove = (e: TouchEvent): void => {
+						const event = e.touches[0]
+
+						const resizerEl = movableRef.current;
+						const pageY = event.pageY, pageX = event.pageX
+
+						const activeResizerClassName = getNameFromClassList(activeResizer.classList);
+
+						const maxParentBottom = getPropertyStyleValueByProp(resizerEl.parentNode, 'height') - (resizerEl.offsetTop);
+						const maxBottom = prevHeight + prevTop - minWidth;
+
+						let { width, height, x = positions.x, y = positions.y } = calcResizablePositionByClass({
+							className: activeResizerClassName,
+							pageX, pageY, prevX, prevY,
+							prevTop, prevWidth, prevHeight, prevLeft,
+							minWidth, maxBottom, x: positions.x, y: positions.y
+						})
+
+						if (useParentBounds) {
+							const maxHeight = getResizableMaxHeight(activeResizerClassName)
+							const parentBounds = getMaxPositionByParent({className: activeResizerClassName,
+								 height, maxHeight, width,
+									maxRight, x, y, maxWidth, maxParentBottom })
+							width = parentBounds.width;
+							height = parentBounds.height;
+							x = parentBounds.x;
+							y = parentBounds.y
+
+						}
+
+
+						const {offsetTop, offsetBottom, offsetLeft, offsetRight} = getResizableOffsets(resizerEl, resizerEl.parentNode)
+
+						setPositions({
+							...positions,
+							x,
+							y,
+							width,
+							height,
+							offsetTop,
+							offsetBottom,
+							offsetRight,
+							offsetLeft,
+							right: getPropertyStyleValueByProp(resizerEl, 'right'),
+							left: getPropertyStyleValueByProp(resizerEl, 'left')
+						});
+
+						setOffsets({
+							x,
+							y
+						})
+
+
+					};
+
+					window.addEventListener('touchmove', onResizerTouchMove);
+					window.addEventListener('touchend', onResizableTouchEnd);
+				};
+
 				const onResizerMouseDown = (e: React.MouseEvent): boolean | void => {
 					if (movableActive) return false;
 					e.stopPropagation();
@@ -162,6 +243,7 @@ import { ResizerStyled } from './ReactMovableResizble.styles';
 							<ResizerStyled className={className}
 							handlersColor={handlersColor}
 							onMouseDown={onResizerMouseDown}
+							onTouchStart={onResizerTouchStart}
 							key={className}
 							hideHandlers={hideHandlers} />
 						))}
