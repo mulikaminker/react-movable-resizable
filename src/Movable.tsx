@@ -13,6 +13,7 @@ export type MovableProps = {
 	borderColor?: string;
 	gridBackground?: boolean;
 	onDrag?: Function;
+	onMouseUp?: Function;
 	initialWidth?: number,
 	initialHeight?: number,
 	initialX?: number,
@@ -30,7 +31,7 @@ const Movable = ({ useParentBounds,
 	 initialHeight,
 	 initialX,
 	 initialY,
-
+	 onMouseUp = () => {},
 	 gridBackground = false}: MovableProps) => {
 	const {
 		positions,
@@ -92,7 +93,64 @@ const Movable = ({ useParentBounds,
 		return { xPosition, yPosition };
 	};
 
-	const onMovableMouseDown = (e: React.MouseEvent) => {
+	const onMovableTouchStart = (e: TouchEvent) => {
+
+		const event = e.touches[0]
+
+		let newX: number,
+			newY: number,
+			prevX = 0,
+			prevY = 0;
+			prevX = event.clientX - offsets.x;
+			prevY = event.clientY - offsets.y;
+
+				const onMovableTouchMove = (e: TouchEvent): void => {
+
+					const event = e.touches[0]
+
+					newX = event.clientX - prevX;
+					newY = event.clientY - prevY;
+
+					const movableEl = movableRef.current;
+
+					const {offsetTop, offsetBottom, offsetLeft, offsetRight} = getResizableOffsets(movableEl, movableEl.parentNode)
+
+
+					if (useParentBounds) {
+						const { xPosition, yPosition } = getMovableParentBounds({ newX, newY });
+						(newX = xPosition), (newY = yPosition);
+					}
+
+					setPositions({
+						...positions,
+						x: newX,
+						y: newY,
+						offsetTop, offsetBottom, offsetLeft, offsetRight,
+						right: getPropertyStyleValueByProp(movableEl, 'right'),
+						left: getPropertyStyleValueByProp(movableEl, 'left')
+					});
+
+					setOffsets({
+									x: newX,
+									y: newY
+					});
+
+				}
+
+				const onMovableTouchEnd = () => {
+
+					document.removeEventListener('touchmove', onMovableTouchMove);
+					document.removeEventListener('touchend', onMovableTouchEnd);
+
+				}
+
+
+		document.addEventListener('touchmove', onMovableTouchMove);
+		document.addEventListener('touchend', onMovableTouchEnd);
+
+	}
+
+	const onMovableMouseDown = (e: MouseEvent) => {
 		if (resizbleActive) return;
 		e.preventDefault();
 
@@ -132,17 +190,20 @@ const Movable = ({ useParentBounds,
 			});
 		};
 
-		const onMovableMouseUp = () => {
+		const onMovableMouseUp = (e: MouseEvent) => {
+			onMouseUp(e);
 			document.removeEventListener('mousemove', onMovableMouseMove);
 			document.removeEventListener('mouseup', onMovableMouseUp);
+
 
 			prevX = newX;
 			prevY = newY;
 			setMovableActive(false);
 		};
 
-		document.addEventListener('mousemove', onMovableMouseMove);
-		document.addEventListener('mouseup', onMovableMouseUp);
+		  document.addEventListener('mousemove', onMovableMouseMove);
+			document.addEventListener('mouseup', onMovableMouseUp);
+
 		setMovableActive(true);
 	};
 
@@ -150,6 +211,7 @@ const Movable = ({ useParentBounds,
 		<MovableStyled
 			ref={movableRef}
 			onMouseDown={onMovableMouseDown}
+			onTouchStart={onMovableTouchStart}
 			width={positions.width}
 			height={positions.height}
 			x={positions.x}
