@@ -4,7 +4,7 @@ import { MovableResizbleProps, MovableResizbleContext } from './types';
 
 const Context = React.createContext<MovableResizbleContext>(null);
 
-const ContextProvider = ({ children }: MovableResizbleProps): JSX.Element => {
+const ContextProvider = React.forwardRef(({ children }: MovableResizbleProps, ref = null): JSX.Element => {
 	const [ positions, setPositions ] = React.useState({
 		x: 0,
 		y: 0,
@@ -23,7 +23,7 @@ const ContextProvider = ({ children }: MovableResizbleProps): JSX.Element => {
 	const [ movableActive, setMovableActive ] = React.useState(false);
 	const [ resizbleActive, setResizbleActive ] = React.useState(false);
 
-	const movableRef = React.useRef(null);
+	const movableRef = ref || React.useRef(null);
 
 
 	return (
@@ -43,6 +43,6 @@ const ContextProvider = ({ children }: MovableResizbleProps): JSX.Element => {
 			{children}
 		</Context.Provider>
 	);
-};
+});
 
 export { Context, ContextProvider };

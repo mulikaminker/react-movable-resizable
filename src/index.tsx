@@ -5,20 +5,23 @@ import Movable from './Movable';
 import Resizble from './Resizable';
 import { ResizbleProps } from './types';
 
-export default (props: ResizbleProps) => {
+export default React.forwardRef((props: ResizbleProps, ref) => {
+
+	console.log(ref)
+
 	return (
-		<ContextProvider>
+		<ContextProvider ref={ref}>
 			<Movable {...props}>
 				<Resizble {...props} />
 			</Movable>
 		</ContextProvider>
 	);
-};
+});
 
-export const MovableComponent = (props: ResizbleProps) =>  {
+export const MovableComponent = React.forwardRef((props: ResizbleProps, ref) =>  {
 	return (
-		<ContextProvider>
+		<ContextProvider ref={ref}>
 			<Movable {...props}/>
 		</ContextProvider>
 	);
-}
+})
