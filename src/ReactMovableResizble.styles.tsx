@@ -17,8 +17,6 @@ export const MovableStyled = styled.div.attrs(
 		}
 	})
 )`
-  min-height: 50px;
-  min-width: 50px;
 	position: absolute;
 	box-sizing: border-box;
 	background-size: 35.33333% 35.33333%;

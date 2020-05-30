@@ -8,8 +8,8 @@ const ContextProvider = React.forwardRef(({ children }: MovableResizbleProps, re
 	const [ positions, setPositions ] = React.useState({
 		x: 0,
 		y: 0,
-		width: 100,
-		height: 100,
+		width: 0,
+		height: 0,
 		maxWidth: 500,
 		maxHeight: 500,
 		offsetRight: 0,

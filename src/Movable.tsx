@@ -27,8 +27,8 @@ const Movable = ({ useParentBounds,
 	 hideBorder,
 	 borderColor = '#000',
 	 onDrag = () => {},
-	 initialWidth = 0,
-	 initialHeight = 0,
+	 initialWidth = 100,
+	 initialHeight = 100,
 	 initialX,
 	 initialY,
 	 onMouseUp = () => {},
@@ -216,7 +216,6 @@ const Movable = ({ useParentBounds,
 			height={positions.height}
 			x={positions.x}
 			y={positions.y}
-			maxWidth={positions.maxWidth}
 			maxHeight={positions.maxHeight}
 			hideBorder={hideBorder}
 			borderColor={borderColor}
