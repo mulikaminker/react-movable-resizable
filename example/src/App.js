@@ -14,7 +14,7 @@ export default () => {
                 }}
             >
                 <ReactMovableResizable
-                    useParentBounds={false}
+                    useParentBounds={true}
                     gridBackground
                     initialWidth={200}
                     initialHeight={200}
