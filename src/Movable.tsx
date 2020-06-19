@@ -43,11 +43,6 @@ const Movable = ({ useParentBounds,
 		movableRef
 	} = React.useContext(Context);
 
-	React.useEffect(() => {
-		const movableEl = movableRef.current;
-		const {offsetTop, offsetBottom, offsetLeft, offsetRight} = getResizableOffsets(movableEl, movableEl.parentNode)
-		onDrag(null, {...positions, offsetTop, offsetBottom, offsetLeft, offsetRight})
-	}, [positions])
 
 	React.useEffect(() => {
 		setPositions({...positions, width: initialWidth, height: initialHeight, x: initialX, y: initialY})
@@ -135,6 +130,11 @@ const Movable = ({ useParentBounds,
 									y: newY
 					});
 
+					onDrag(null, {	...positions,
+									x: newX,
+									y: newY,
+									offsetTop, offsetBottom, offsetLeft, offsetRight})
+
 				}
 
 				const onMovableTouchEnd = () => {
@@ -188,6 +188,12 @@ const Movable = ({ useParentBounds,
 							x: newX,
 							y: newY
 			});
+
+			onDrag(null, {	...positions,
+							x: newX,
+							y: newY,
+							offsetTop, offsetBottom, offsetLeft, offsetRight})
+
 		};
 
 		const onMovableMouseUp = (e: MouseEvent) => {
