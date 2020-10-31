@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useRef} from "react";
 
 import ReactMovableResizable, { Movable } from "react-movable-resizable";
 
 export default () => {
+  const myRef = useRef(null)
     return (
         <div>
             <div
@@ -14,6 +15,7 @@ export default () => {
                 }}
             >
                 <ReactMovableResizable
+                  ref={myRef}
                     useParentBounds={true}
                     gridBackground
                     initialWidth={200}

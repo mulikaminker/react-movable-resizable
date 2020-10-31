@@ -5,8 +5,9 @@ export const MovableStyled = styled.div.attrs(
 		 x: number; y:
 		 number; maxHeight:
 		 number; maxWidth: number;
-		  hideBorder: boolean; borderColor: string, gridBackground: boolean }) : any => ({
+		  hideBorder: boolean; borderColor: string, gridBackground: boolean; style: object }) : any => ({
 		style: {
+			...props.style,
 			width: `${props.width}px`,
 			height: `${props.height}px`,
 			left: `${props.x}px`,

@@ -16,7 +16,6 @@ export type MovableProps = {
     hideHandlers?: boolean;
     borderColor?: string;
     gridBackground?: boolean;
-    onDrag?: Function;
     onMouseUp?: Function;
     initialWidth?: number;
     initialHeight?: number;
@@ -38,7 +37,8 @@ const Movable = ({
     initialY,
     onMouseUp = () => {},
     gridBackground = false,
-    className = ""
+    className = "",
+    style
 }: MovableProps) => {
     const {
         positions,
@@ -259,6 +259,7 @@ const Movable = ({
             borderColor={borderColor}
             gridBackground={gridBackground}
             className={className}
+            style={style}
         >
             {children}
         </MovableStyled>
