@@ -24,6 +24,7 @@ export type MovableProps = {
     width?: number;
     className?: string;
     style: object;
+    onDrag: Function
 };
 
 const Movable = ({
@@ -36,6 +37,7 @@ const Movable = ({
     initialX,
     initialY,
     onMouseUp = () => {},
+    onDrag = () => {},
     gridBackground = false,
     className = "",
     style
@@ -58,6 +60,10 @@ const Movable = ({
             offsetLeft,
             offsetRight
         } = getResizableOffsets(movableEl, movableEl.parentNode);
+        onDrag(null, {...positions,   offsetTop,
+          offsetBottom,
+          offsetLeft,
+          offsetRight})
     }, [positions]);
 
     React.useEffect(() => {

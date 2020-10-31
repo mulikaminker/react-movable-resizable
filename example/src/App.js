@@ -37,6 +37,7 @@ export default () => {
                     handlersColor="red"
                     width={200}
                     height={300}
+                    onDrag={(_, positions) => console.log(positions)}
                     style={{transition, transform: transition && "translateY(50%);"}}
                 ></ReactMovableResizable>
             </div>

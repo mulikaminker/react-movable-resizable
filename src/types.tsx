@@ -12,7 +12,7 @@ export type ResizbleProps = {
     handlersColor?: string;
     borderColor?: string;
     gridBackground?: boolean;
-    onDrag?: Function;
+    onDrag: Function;
     initialWidth?: number;
     initialHeight?: number;
     initialX?: number;
