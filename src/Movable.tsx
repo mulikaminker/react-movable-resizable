@@ -70,6 +70,8 @@ const Movable = ({
     }, [positions]);
 
     React.useEffect(() => {
+      const movableEl = movableRef.current;
+
       setPositions({
             ...positions,
             width: initialWidth,
@@ -80,6 +82,20 @@ const Movable = ({
         setOffsets({
             x: initialX,
             y: initialY
+        });
+
+        const {
+            offsetTop,
+            offsetBottom,
+            offsetLeft,
+            offsetRight
+        } = getResizableOffsets(movableEl, movableEl.parentNode);
+        onDrag(null, {
+            ...positions,
+            offsetTop,
+            offsetBottom,
+            offsetLeft,
+            offsetRight
         });
     }, [initialY, initialWidth, initialY, initialHeight]);
 
