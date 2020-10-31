@@ -63,10 +63,10 @@ const Movable = ({
     React.useEffect(() => {
         setPositions({
             ...positions,
-            width: initialWidth,
-            height: initialHeight,
-            x: initialX,
-            y: initialY
+            width: initialWidth || positions.width,
+            height: initialHeight || positions.height,
+            x: initialX || positions.x,
+            y: initialY || positions.y
         });
     }, [initialY, initialWidth, initialY, initialHeight]);
 
