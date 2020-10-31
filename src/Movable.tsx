@@ -53,26 +53,33 @@ const Movable = ({
     } = React.useContext(Context);
 
     React.useEffect(() => {
-        const movableEl = movableRef.current;
-        const {
-            offsetTop,
-            offsetBottom,
-            offsetLeft,
-            offsetRight
-        } = getResizableOffsets(movableEl, movableEl.parentNode);
-        onDrag(null, {...positions,   offsetTop,
-          offsetBottom,
-          offsetLeft,
-          offsetRight})
+      const movableEl = movableRef.current;
+       const {
+           offsetTop,
+           offsetBottom,
+           offsetLeft,
+           offsetRight
+       } = getResizableOffsets(movableEl, movableEl.parentNode);
+       onDrag(null, {
+           ...positions,
+           offsetTop,
+           offsetBottom,
+           offsetLeft,
+           offsetRight
+       });
     }, [positions]);
 
     React.useEffect(() => {
-        setPositions({
+      setPositions({
             ...positions,
-            width: initialWidth || positions.width,
-            height: initialHeight || positions.height,
-            x: initialX || positions.x,
-            y: initialY || positions.y
+            width: initialWidth,
+            height: initialHeight,
+            x: initialX,
+            y: initialY
+        });
+        setOffsets({
+            x: initialX,
+            y: initialY
         });
     }, [initialY, initialWidth, initialY, initialHeight]);
 

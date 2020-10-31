@@ -14,7 +14,6 @@ export default () => {
           setSize({width: 200, height: 500, x: (500 - 200) / 2, y: 0})
           setTimeout(() =>{
             setTransition("")
-            setSize({})
           }, 1000)
         }}>move!</button>
             <div
