@@ -69,9 +69,6 @@ const Movable = ({
                 offsetLeft,
                 offsetRight
             });
-       onDrag(null, {
-           positions,
-       });
     }, [positions]);
 
     React.useEffect(() => {
@@ -202,8 +199,6 @@ const Movable = ({
         document.addEventListener("touchmove", onMovableTouchMove);
         document.addEventListener("touchend", onMovableTouchEnd);
     };
-
-    console.log(movableActive)
 
     const onMovableMouseDown = (e: MouseEvent) => {
         if (resizbleActive) return;
