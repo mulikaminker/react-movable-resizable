@@ -48,56 +48,52 @@ const Movable = ({
         offsets,
         setOffsets,
         setMovableActive,
+        movableActive,
         resizbleActive,
-        movableRef
+        movableRef,
     } = React.useContext(Context);
 
     React.useEffect(() => {
       const movableEl = movableRef.current;
-       const {
-           offsetTop,
-           offsetBottom,
-           offsetLeft,
-           offsetRight
-       } = getResizableOffsets(movableEl, movableEl.parentNode);
+
+            const {
+                offsetTop,
+                offsetBottom,
+                offsetLeft,
+                offsetRight
+            } = getResizableOffsets(movableEl, movableEl.parentNode);
+            onDrag(null, {
+                ...positions,
+                offsetTop,
+                offsetBottom,
+                offsetLeft,
+                offsetRight
+            });
        onDrag(null, {
-           ...positions,
-           offsetTop,
-           offsetBottom,
-           offsetLeft,
-           offsetRight
+           positions,
        });
     }, [positions]);
 
     React.useEffect(() => {
-      const movableEl = movableRef.current;
 
-      setPositions({
-            ...positions,
-            width: initialWidth,
-            height: initialHeight,
-            x: initialX,
-            y: initialY
-        });
+      setMovableActive(true)
+
+
         setOffsets({
             x: initialX,
             y: initialY
         });
 
-        const {
-            offsetTop,
-            offsetBottom,
-            offsetLeft,
-            offsetRight
-        } = getResizableOffsets(movableEl, movableEl.parentNode);
-        onDrag(null, {
-            ...positions,
-            offsetTop,
-            offsetBottom,
-            offsetLeft,
-            offsetRight
-        });
-    }, [initialY, initialWidth, initialY, initialHeight]);
+        setPositions({
+              ...positions,
+              width: initialWidth,
+              height: initialHeight,
+              x: initialX,
+              y: initialY
+          });
+
+          setMovableActive(false)
+    }, [initialY, initialWidth, initialX, initialHeight]);
 
     const getMovableParentBounds = ({
         newX,
@@ -199,16 +195,20 @@ const Movable = ({
         };
 
         const onMovableTouchEnd = () => {
+          setMovableActive(false)
             document.removeEventListener("touchmove", onMovableTouchMove);
             document.removeEventListener("touchend", onMovableTouchEnd);
         };
-
         document.addEventListener("touchmove", onMovableTouchMove);
         document.addEventListener("touchend", onMovableTouchEnd);
     };
 
+    console.log(movableActive)
+
     const onMovableMouseDown = (e: MouseEvent) => {
         if (resizbleActive) return;
+        setMovableActive(true);
+
         e.preventDefault();
 
         let newX: number,
@@ -270,7 +270,6 @@ const Movable = ({
         document.addEventListener("mousemove", onMovableMouseMove);
         document.addEventListener("mouseup", onMovableMouseUp);
 
-        setMovableActive(true);
     };
 
     return (
@@ -289,6 +288,7 @@ const Movable = ({
             gridBackground={gridBackground}
             className={className}
             style={style}
+            movableActive={movableActive}
         >
             {children}
         </MovableStyled>

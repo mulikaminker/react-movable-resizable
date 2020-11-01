@@ -5,7 +5,7 @@ export const MovableStyled = styled.div.attrs(
 		 x: number; y:
 		 number; maxHeight:
 		 number; maxWidth: number;
-		  hideBorder: boolean; borderColor: string, gridBackground: boolean; style: object }) : any => ({
+		  hideBorder: boolean; borderColor: string, gridBackground: boolean; style: object, movableActive: boolean }) : any => ({
 		style: {
 			...props.style,
 			width: `${props.width}px`,
@@ -15,6 +15,7 @@ export const MovableStyled = styled.div.attrs(
 			maxWidth: `${props.width}px`,
 			border: `${!props.hideBorder && `1px solid ${props.borderColor}`}`,
 
+
 		}
 	})
 )`
@@ -22,9 +23,10 @@ export const MovableStyled = styled.div.attrs(
 	box-sizing: border-box;
 	background-size: 35.33333% 35.33333%;
 	background-position: -4% -5%;
-	background-image: ${(props: any) => props.gridBackground &&
+	background-image: ${(props: any) => props.gridBackground && props.movableActive &&
     `linear-gradient(to right, ${props.borderColor} 1px, transparent 1px),
     linear-gradient(to bottom, ${props.borderColor} 1px, transparent 1px)`};
+		cursor: ${(props: any) => props.movableActive && `move`};
 `;
 
 export const ResizerStyled = styled.div.attrs(
